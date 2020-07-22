@@ -1,0 +1,106 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2020-07-20T11:55:43.049Z",
+    "end": "2020-07-20T11:55:45.460Z",
+    "duration": 2411,
+    "testsRegistered": 1,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "c1a6c287-988e-4211-b3f4-18c36a47a229",
+      "title": "",
+      "fullFile": "cypress/integration/examples/local_storage.spec.js",
+      "file": "cypress/integration/examples/local_storage.spec.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "85ff1220-dd4b-4714-a23d-2d988d676f8a",
+          "title": "Local Storage",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "cy.clearLocalStorage() - clear all data in local storage",
+              "fullTitle": "Local Storage cy.clearLocalStorage() - clear all data in local storage",
+              "timedOut": null,
+              "duration": 1319,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// https://on.cypress.io/clearlocalstorage\ncy.get('.ls-btn').click().should(function () {\n  expect(localStorage.getItem('prop1')).to.eq('red');\n  expect(localStorage.getItem('prop2')).to.eq('blue');\n  expect(localStorage.getItem('prop3')).to.eq('magenta');\n}); // clearLocalStorage() yields the localStorage object\ncy.clearLocalStorage().should(function (ls) {\n  expect(ls.getItem('prop1')).to.be[\"null\"];\n  expect(ls.getItem('prop2')).to.be[\"null\"];\n  expect(ls.getItem('prop3')).to.be[\"null\"];\n}); // Clear key matching string in Local Storage\ncy.get('.ls-btn').click().should(function () {\n  expect(localStorage.getItem('prop1')).to.eq('red');\n  expect(localStorage.getItem('prop2')).to.eq('blue');\n  expect(localStorage.getItem('prop3')).to.eq('magenta');\n});\ncy.clearLocalStorage('prop1').should(function (ls) {\n  expect(ls.getItem('prop1')).to.be[\"null\"];\n  expect(ls.getItem('prop2')).to.eq('blue');\n  expect(ls.getItem('prop3')).to.eq('magenta');\n}); // Clear keys matching regex in Local Storage\ncy.get('.ls-btn').click().should(function () {\n  expect(localStorage.getItem('prop1')).to.eq('red');\n  expect(localStorage.getItem('prop2')).to.eq('blue');\n  expect(localStorage.getItem('prop3')).to.eq('magenta');\n});\ncy.clearLocalStorage(/prop1|2/).should(function (ls) {\n  expect(ls.getItem('prop1')).to.be[\"null\"];\n  expect(ls.getItem('prop2')).to.be[\"null\"];\n  expect(ls.getItem('prop3')).to.eq('magenta');\n});",
+              "err": {},
+              "uuid": "22f0bebf-f8ed-401e-ae68-fa3729170fa5",
+              "parentUUID": "85ff1220-dd4b-4714-a23d-2d988d676f8a",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "22f0bebf-f8ed-401e-ae68-fa3729170fa5"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 1319,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "6.1.1"
+    },
+    "marge": {
+      "options": {
+        "id": "default",
+        "quite": true,
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "5.1.0"
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "name": "cydemo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "pretest": "node removedir.js",
+    "testcases": "cypress run --config pageLoadTimeout=100000",
+    "combine-reports": "mochawesome-merge --reportDir cypress/mochawesome-report/*.json>mochawesome.json",
+    "generate-report": "merge mochawesome.json",
+    "posttest": "npm run combine-reports && npm run generate-report",
+    "test": "npm run testcases || npm run posttest"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "cypress": "^4.9.0",
+    "cypress-multi-reporters": "^1.4.0",
+    "del-cli": "^3.0.1",
+    "mocha": "^8.0.1",
+    "mocha-junit-reporter": "^2.0.0",
+    "mochawesome": "^6.1.1",
+    "mochawesome-merge": "^4.1.0",
+    "mochawesome-report-generator": "^5.1.0"
+  },
+  "dependencies": {
+    "rimraf": "^3.0.2"
+  }
+}

@@ -1,0 +1,168 @@
+{
+  "stats": {
+    "suites": 2,
+    "tests": 3,
+    "passes": 2,
+    "pending": 0,
+    "failures": 1,
+    "start": "2020-07-20T11:57:21.754Z",
+    "end": "2020-07-20T11:57:28.276Z",
+    "duration": 6522,
+    "testsRegistered": 3,
+    "passPercent": 66.66666666666666,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "862f7381-ef6b-4dd7-8271-fe7e37f780c1",
+      "title": "",
+      "fullFile": "cypress/integration/screener_demo.spec.js",
+      "file": "cypress/integration/screener_demo.spec.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "0575efd5-4cd0-4c9e-9f05-fed87f74a1d7",
+          "title": "Screener.in",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Verify the Search option in home page",
+              "fullTitle": "Screener.in Verify the Search option in home page",
+              "timedOut": null,
+              "duration": 3579,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.get('input[placeholder= \"eg. infosys\"]').type('Infosys');\ncy.get('ul li:first').should('have.class', 'active').click(); //cy.url().should('include','/INFY/')\ncy.title().should('include', 'Infosys Ltd');",
+              "err": {},
+              "uuid": "1d5ff58c-78e5-4197-80ee-8e709039811c",
+              "parentUUID": "0575efd5-4cd0-4c9e-9f05-fed87f74a1d7",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Verify the CMP of Particular company",
+              "fullTitle": "Screener.in Verify the CMP of Particular company",
+              "timedOut": null,
+              "duration": 817,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.get('input[placeholder= \"eg. infosys\"]').type('TCS');\ncy.get('ul li:first').should('have.class', 'active').click();\ncy.get('#content-area > section:nth-child(5) > ul > li:nth-child(2) > b').then(function ($text) {\n  var text1 = $text.text();\n  cy.writeFile('cypress/fixtures/price.txt', 'CMP is ' + text1);\n});",
+              "err": {},
+              "uuid": "1fe62b16-ab19-4953-b136-a507c8042f3e",
+              "parentUUID": "0575efd5-4cd0-4c9e-9f05-fed87f74a1d7",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "1d5ff58c-78e5-4197-80ee-8e709039811c",
+            "1fe62b16-ab19-4953-b136-a507c8042f3e"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 4396,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        },
+        {
+          "uuid": "94b85736-fedc-471b-88fb-8d6ba6ced2d6",
+          "title": "Parametrization",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Verify the CMPs of 3 companies",
+              "fullTitle": "Parametrization Verify the CMPs of 3 companies",
+              "timedOut": null,
+              "duration": 486,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.fixture('example1.json').as(\"inputdata\");\ncy.get(\"@inputdata\").then(function (inputdata) {\n  var input = inputdata.Company;\n  input.forEach(function (input1) {\n    cy.visit('https://www.screener.in/');\n    cy.get('input[placeholder= \"eg. infosys\"]').type(input1);\n    cy.get('ul li:first').should('have.class', 'active').click();\n    cy.get('#content-area > section:nth-child(5) > ul > li:nth-child(2) > b').then(function ($text) {\n      var text1 = $text.text();\n      cy.readFile('cypress/fixtures/CMP').as(\"CMP\");\n      cy.get(\"@CMP\").then(function ($CMP) {\n        var text2 = $CMP;\n        cy.writeFile('cypress/fixtures/CMP', 'CMP of ' + input1 + ' is ' + text1 + '\\n' + text2);\n      });\n    });\n  });\n});",
+              "err": {
+                "message": "Error: A fixture file could not be found at any of the following paths:\n\n> cypress/fixtures/example1.json\n> cypress/fixtures/example1.json{{extension}}\n\nCypress looked for these file extensions at the provided path:\n\n> .json, .js, .coffee, .html, .txt, .csv, .png, .jpg, .jpeg, .gif, .tif, .tiff, .zip\n\nProvide a path to an existing fixture file.",
+                "estack": "Error: A fixture file could not be found at any of the following paths:\n\n> cypress/fixtures/example1.json\n> cypress/fixtures/example1.json{{extension}}\n\nCypress looked for these file extensions at the provided path:\n\n> .json, .js, .coffee, .html, .txt, .csv, .png, .jpg, .jpeg, .gif, .tif, .tiff, .zip\n\nProvide a path to an existing fixture file.\n    at get (/Users/saurabhchopra/Library/Caches/Cypress/4.10.0/Cypress.app/Contents/Resources/app/packages/server/lib/errors.js:946:15)\n    at Object.throwErr [as throw] (/Users/saurabhchopra/Library/Caches/Cypress/4.10.0/Cypress.app/Contents/Resources/app/packages/server/lib/errors.js:964:9)\n    at Object.<anonymous> (/Users/saurabhchopra/Library/Caches/Cypress/4.10.0/Cypress.app/Contents/Resources/app/packages/server/lib/fixture.js:62:23)\n    at Object.tryCatcher (/Users/saurabhchopra/Library/Caches/Cypress/4.10.0/Cypress.app/Contents/Resources/app/packages/server/node_modules/bluebird/js/release/util.js:16:23)\n    at Promise._settlePromiseFromHandler (/Users/saurabhchopra/Library/Caches/Cypress/4.10.0/Cypress.app/Contents/Resources/app/packages/server/node_modules/bluebird/js/release/promise.js:547:31)\n    at Promise._settlePromise (/Users/saurabhchopra/Library/Caches/Cypress/4.10.0/Cypress.app/Contents/Resources/app/packages/server/node_modules/bluebird/js/release/promise.js:604:18)\n    at Promise._settlePromise0 (/Users/saurabhchopra/Library/Caches/Cypress/4.10.0/Cypress.app/Contents/Resources/app/packages/server/node_modules/bluebird/js/release/promise.js:649:10)\n    at Promise._settlePromises (/Users/saurabhchopra/Library/Caches/Cypress/4.10.0/Cypress.app/Contents/Resources/app/packages/server/node_modules/bluebird/js/release/promise.js:729:18)\n    at Promise._fulfill (/Users/saurabhchopra/Library/Caches/Cypress/4.10.0/Cypress.app/Contents/Resources/app/packages/server/node_modules/bluebird/js/release/promise.js:673:18)\n    at /Users/saurabhchopra/Library/Caches/Cypress/4.10.0/Cypress.app/Contents/Resources/app/packages/server/node_modules/bluebird/js/release/nodeback.js:42:21\n    at f (/Users/saurabhchopra/Library/Caches/Cypress/4.10.0/Cypress.app/Contents/Resources/app/packages/server/node_modules/once/once.js:25:25)\n    at Glob.<anonymous> (/Users/saurabhchopra/Library/Caches/Cypress/4.10.0/Cypress.app/Contents/Resources/app/packages/server/node_modules/glob/glob.js:151:7)\n    at Glob.emit (events.js:210:5)\n    at Glob._finish (/Users/saurabhchopra/Library/Caches/Cypress/4.10.0/Cypress.app/Contents/Resources/app/packages/server/node_modules/glob/glob.js:197:8)\n    at done (/Users/saurabhchopra/Library/Caches/Cypress/4.10.0/Cypress.app/Contents/Resources/app/packages/server/node_modules/glob/glob.js:182:14)\n    at Glob._processSimple2 (/Users/saurabhchopra/Library/Caches/Cypress/4.10.0/Cypress.app/Contents/Resources/app/packages/server/node_modules/glob/glob.js:688:12)\n    at /Users/saurabhchopra/Library/Caches/Cypress/4.10.0/Cypress.app/Contents/Resources/app/packages/server/node_modules/glob/glob.js:676:10\n    at Glob._stat2 (/Users/saurabhchopra/Library/Caches/Cypress/4.10.0/Cypress.app/Contents/Resources/app/packages/server/node_modules/glob/glob.js:772:12)\n    at lstatcb_ (/Users/saurabhchopra/Library/Caches/Cypress/4.10.0/Cypress.app/Contents/Resources/app/packages/server/node_modules/glob/glob.js:764:12)\n    at RES (/Users/saurabhchopra/Library/Caches/Cypress/4.10.0/Cypress.app/Contents/Resources/app/packages/server/node_modules/inflight/inflight.js:31:16)\n    at f (/Users/saurabhchopra/Library/Caches/Cypress/4.10.0/Cypress.app/Contents/Resources/app/packages/server/node_modules/once/once.js:25:25)\n    at callback (/Users/saurabhchopra/Library/Caches/Cypress/4.10.0/Cypress.app/Contents/Resources/app/packages/server/node_modules/graceful-fs/polyfills.js:289:20)\n    at FSReqCallback.oncomplete (fs.js:158:21)\n",
+                "diff": null
+              },
+              "uuid": "47a0091f-2b82-4537-8ded-2e865a95fd36",
+              "parentUUID": "94b85736-fedc-471b-88fb-8d6ba6ced2d6",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [],
+          "failures": [
+            "47a0091f-2b82-4537-8ded-2e865a95fd36"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 486,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "6.1.1"
+    },
+    "marge": {
+      "options": {
+        "id": "default",
+        "quite": true,
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "5.1.0"
+    }
+  }
+}
