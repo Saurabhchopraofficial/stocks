@@ -1,44 +1,70 @@
-context('Screener.in', () => {
-beforeEach(() => {
-    cy.visit('https://www.screener.in/')
-  })
+import selectors from '../data/selectors'
 
-  it('Verify the Search option in home page',() => {
-      cy.get('input[placeholder= "eg. infosys"]').type('Infosys')
-      cy.get('ul li:first').should('have.class','active').click()
-      //cy.url().should('include','/INFY/')
-      cy.title().should('include','Infosys Ltd')
-  })
- it('Verify the CMP of Particular company',() =>{
-    cy.get('input[placeholder= "eg. infosys"]').type('TCS')
-    cy.get('ul li:first').should('have.class','active').click()
-    cy.get('#content-area > section:nth-child(5) > ul > li:nth-child(2) > b').then(($text=>{
-        const text1 = $text.text()
-        cy.writeFile('cypress/fixtures/price.txt','CMP is '+text1)
+let arrayStocks = ['Infosys Ltd', 'TCS', 'Reliance'];
+let buyStocks = [];
+let holdStocks = [];
 
-    }))
-   
- })
- 
-})
-context('Parametrization',() =>{
-it('Verify the CMPs of 3 companies',()=>{
-  cy.fixture('example1.json').as("inputdata")
-  cy.get("@inputdata").then((inputdata)=>{
-    const input = inputdata.Company
-    input.forEach(input1 => {
+arrayStocks.forEach(stock => {
+  
+  describe('Screener.in', () => {
+    before(() => {
       cy.visit('https://www.screener.in/')
-      cy.get('input[placeholder= "eg. infosys"]').type(input1)
-      cy.get('ul li:first').should('have.class','active').click()
-      cy.get('#content-area > section:nth-child(5) > ul > li:nth-child(2) > b').then(($text => {
-        const text1 = $text.text()
-        cy.readFile('cypress/fixtures/CMP').as("CMP")
-        cy.get("@CMP").then(($CMP)=>{
-        const text2 = $CMP
-        cy.writeFile('cypress/fixtures/CMP','CMP of '+input1+' is '+text1+'\n'+text2)
-          })    
-        }))                
+    })
+    it('Compares CMP of ' + stock + ' with 52 week high' , () => {
+      //Select the Stock
+      cy.get(selectors.searchBox).type(stock)
+      cy.get(selectors.selectStock).click()
+      //Get 52 wk high
+      cy.get(selectors.yearHigh).then(text => {
+        var yearHigh = text.text().replace(",", "")
+        //Get CMP
+        cy.get(selectors.cmp).then(text => {
+          var cmp = text.text().replace(",", "")
+          //Compare CMP with 52 wk high
+          if (cmp < 0.90 * yearHigh) {
+            cy.log('Stock is 10% below its 52 week high')
+            buyStocks.push(stock);
+          } else {
+            cy.log('No Buy signals yet')
+            holdStocks.push(stock);
+          }
+        })
+      })
+    })  
+  }) 
+});
+
+describe('Publish the results', () => {  
+  
+  it('Publishes stocks with a Buy signal', () => {
+    cy.log(buyStocks)
+    cy.writeFile('cypress/fixtures/buy.txt','Following stocks present a Buy Signal: '+ buyStocks)
+  })
+  it('Publishes stocks with no signal', () => {
+    cy.log(holdStocks)
+    cy.writeFile('cypress/fixtures/hold.txt','Following stocks do not have a Buy signal: '+ holdStocks)
+  })
+
+});
+
+  xdescribe('Parametrization',() =>{
+    it('Verify the CMPs of 3 companies',()=>{
+      cy.fixture('example1.json').as("inputdata")
+      cy.get("@inputdata").then((inputdata)=>{
+        const input = inputdata.Company
+        input.forEach(input1 => {
+          cy.visit('https://www.screener.in/');
+          cy.get(selectors.searchBox).type(input1);
+          cy.get(selectors.selectStock).click();
+          cy.get(selectors.cmp).then(text => {
+            const text1 = text.text()
+            cy.readFile('cypress/fixtures/CMP').as("CMP")
+            cy.get("@CMP").then(CMP => {
+              const text2 = CMP
+              cy.writeFile('cypress/fixtures/CMP','CMP of '+input1+' is '+text1+'\n'+text2)
+            })    
+          })   
+        })
       })
     })
   })
-})

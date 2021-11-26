@@ -5,11 +5,13 @@
   "main": "index.js",
   "scripts": {
     "pretest": "node removedir.js",
+    "tests": "cypress open",
     "testcases": "cypress run --config pageLoadTimeout=100000",
     "combine-reports": "mochawesome-merge --reportDir cypress/mochawesome-report/*.json>mochawesome.json",
     "generate-report": "merge mochawesome.json",
     "posttest": "npm run combine-reports && npm run generate-report",
-    "test": "npm run testcases || npm run posttest"
+    "test": "npm run testcases || npm run posttest",
+    "testOpen": "npm run tests"
   },
   "author": "",
   "license": "ISC",
